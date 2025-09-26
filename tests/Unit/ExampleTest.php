@@ -21,3 +21,4 @@ class ExampleTest extends TestCase
 // test
 // test
 // test
+// test
