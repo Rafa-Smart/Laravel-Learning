@@ -16,3 +16,5 @@ sekarnag belajar factory
 
 1. cara buatnya
 php artisan make:factory NamaFile
+
+kalo mau ake faker, bisa ke webnya di faker
