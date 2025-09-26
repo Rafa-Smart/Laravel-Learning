@@ -18,6 +18,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    // agar bisa di factory
     protected $fillable = [
         'name',
         'email',

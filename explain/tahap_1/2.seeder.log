@@ -11,3 +11,8 @@ nah disitu tambahin aja liat aja di filenya
 
 lalu cara jalankannya itu menggunakn perintah php artisan db:seed
 maka akan menjalankan seluruh file seeder yang ada
+
+sekarnag belajar factory
+
+1. cara buatnya
+php artisan make:factory NamaFile
