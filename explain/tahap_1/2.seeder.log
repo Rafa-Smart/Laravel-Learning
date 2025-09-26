@@ -1,0 +1,13 @@
+1. cara buat seeder
+
+php artisan make:seeder BlogSeeder
+
+2. cara jalankan
+php artisan db:seed --class=BlogSeeder
+
+3. cara agar ketika kia mau menjalankan seeder ke seluruh fie
+itu da di file DatabaseSeeder.php
+nah disitu tambahin aja liat aja di filenya
+
+lalu cara jalankannya itu menggunakn perintah php artisan db:seed
+maka akan menjalankan seluruh file seeder yang ada

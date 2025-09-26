@@ -1,0 +1,72 @@
+jadi yg pertama itu kita buat dulu confignya di config/database
+lalu jalankan migrationnya
+
+dengan cara
+php artisan migrate
+
+php artisan migrate --help
+
+php artisan migrate:status
+buat ngeliat apakah migrasi kita udah dibuat atau belum
+
+cara buat migrasiphp artisan make:migration create_blogs_table
+
+
+jdai setiap klai mau buat lagi si data tablenya, kita harus fresh dulubaru migrate lagi
+
+cara me rollback atua menghapus
+
+jdai dia akna menghapus data yang teralhir kita buat di databasemau itu able dll
+
+php artisan migrate:rollback
+
+
+
+jdai cara kerjanya itu adlaah, lihat d file migrate
+jadi ada fungsi up dan fungsi down
+fungsi up adalah yang akan dijalankan ketika kita ketika php artisan migrate
+
+dan fungsi dari down adalah akan dijalankan ketika kita ketik php artisan migrate:rollback
+
+
+
+atau kalo mau ngpus data table nya misal pengen yang batch nya itu adalah yang ke yang terahir sampai yang batch ketiga
+maka caranya itu adalah dengan php artisan migrate:rollback --step=3
+
+maka kalo kita punya bacthnya itu 6, maka kan terhapus jadinya itu bacth 1 2 3, dan 4 5 6 aan di hapus
+
+karena defaultnya itu dia kana hapus batch yang paling terakhir
+
+jadi batch itu akan beratambah ketika migrate dijalankan, jadi untuk mngetahui ini tuh migration ke berapa
+
+
+adalagi refres dan freshkalo fresh itu drop dulu tabelnya baru migrate lagi
+
+tapi kalo refresh itu langsung di migrate ulang tanpa dihapus
+
+
+
+cara tambahin column, ke tabel yan sudah ada isinya
+caranya adalah 
+1. kita membuat file migation baru
+
+dengan cara kasih namanya itu pake add_column_namaColumn_to_blogs
+lalu langsng aja kita buat column yang mau kita buat aja, jadi $title->idny  hapus
+
+lalu angan lupa nanti di fngsi downnya kita juga buat ketika di rollback harusnya
+kita hanya menghapus columnnya saja
+
+Schema::create('blogs', function (eBlueprint $tabl){
+if(Schema::hasColumn("blogs", "test")){
+    $table->dropColumn("test");
+}
+});
+
+inget juga ketika kita ingin menambah column baru, kita harus pasnag dia sebagai nulable, karena datanya itu pasti belumn ada
+
+
+jadi iniinya kalo kita udah sampe production dan kita mau ngubah ubah si tabelnya tanpa ngapus datanya
+maka ktia buat migration baru gitu
+
+dan kalo mau ubah data (bukan tambah atau hapus)
+maka kita harus tambahkan fnugsi $table->string('title')->change();
