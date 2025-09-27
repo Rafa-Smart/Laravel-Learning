@@ -16,7 +16,6 @@ class BlogFactory extends Factory
      *
      * @var string|null
      */
-    protected static $password;
 
     /**
      * Define the model's default state.
@@ -27,7 +26,7 @@ class BlogFactory extends Factory
     {
         return [
             'title' => fake()->sentence(4),
-            'description' => fake()->realText(300),
+            'description' => fake()->sentence(70),
         ];
     }
 }
