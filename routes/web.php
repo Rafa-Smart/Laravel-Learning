@@ -22,4 +22,8 @@ require __DIR__ . '/auth.php';
 Route::get(
     '/blog',
     [BlogController::class, 'index']
-)->name('index');
+)->name('halaman-utama');
+
+
+Route::get("blog/add", [BlogController::class, 'add']);
+Route::post("blog/create", [BlogController::class, 'create']);
