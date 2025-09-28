@@ -31,3 +31,13 @@ Route::post("blog/create", [BlogController::class, 'create']);
 // dan {id} ini otomatis akan menangkap parameter id dari url
 // lalu dikirim ke parameter di fungsi detail di BlogController
 Route::get("blog/{id}/detail", [BlogController::class, 'detail']);
+
+
+
+Route::get("blog/{id}/edit", [BlogController::class, 'edit']);
+
+// karena kita mau update
+Route::patch("blog/{id}/update", [BlogController::class, 'update']);
+
+
+Route::get("blog/{id}/delete", [BlogController::class, 'delete']);

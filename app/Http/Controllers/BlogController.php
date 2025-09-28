@@ -67,10 +67,74 @@ class BlogController extends Controller
         // return redirect('blog');
     }
 
+    public function detail(Request $request, $id)
+    {
+        $blog = DB::table('blogs')->where('id', $id)->first();
 
-    public function detail(Request $request, $id){
-        $blog = DB::table("blogs")->where("id",$id)->first();
-        return view("blog-detail", ["blog"=>$blog]);
+        if (! $blog) {
+            // kalo ga ada datanya
+            return redirect()->route('halaman-utama');
+
+            // atau bisa juga pake not fount
+            // abort(404);
+        }
+
+        return view('blog-detail', ['blog' => $blog]);
     }
 
+    public function edit(Request $request, $id)
+    {
+        $blog = DB::table('blogs')->where('id', $id)->first();
+        if (! $blog) {
+            // kalo ga ada datanya
+            return redirect()->route('halaman-utama');
+
+            // atau bisa juga pake not fount
+            // abort(404);
+        }
+
+        return view('blog-edit', ['blog' => $blog]);
+    }
+
+    public function update(Request $request, $id){
+        $blog = DB::table('blogs')->where('id', $id)->first();
+        if (! $blog) {
+            // kalo ga ada datanya
+            return redirect()->route('halaman-utama');
+
+            // atau bisa juga pake not fount
+            // abort(404);
+        }
+
+        $request->validate([
+            'title' => 'required|max:255|unique:blogs',
+            'description' => 'required',
+        ]);
+
+        DB::table('blogs')->where('id', $id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        Session::flash('message', 'Blog has been updated!');
+
+        return redirect()->route('halaman-utama');
+    }
+
+    public function delete(Request $request, $id){
+        $blog = DB::table('blogs')->where('id', $id)->first();
+        if (! $blog) {
+            // kalo ga ada datanya
+            return redirect()->route('halaman-utama');
+
+            // atau bisa juga pake not fount
+            // abort(404);
+        }
+
+        DB::table('blogs')->where('id', $id)->delete();
+
+        Session::flash('message', 'Blog has been deleted!');
+
+        return redirect()->route('halaman-utama');
+    }
 }

@@ -27,8 +27,8 @@
                     </div>
                     <div class="card-footer text-center">
                         <a href="{{ url('blog') }}" class="btn btn-secondary">Back to List</a>
-                        <a href="#" class="btn btn-warning">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="{{ url("blog/".$blog->id."/edit") }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ url("blog/".$blog->id."/delete") }}" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>
