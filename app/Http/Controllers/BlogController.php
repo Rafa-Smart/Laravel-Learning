@@ -21,17 +21,24 @@ class BlogController extends Controller
         // DB::table('blogs') → memanggil Query Builder Laravel, diarahkan ke tabel blogs.
 
         // Hasilnya bukan langsung data, tapi objek query (builder) yang bisa kamu tambahin kondisi sebelum dieksekusi.
-        $query = DB::table('blogs');
+
+        // nah kalo pake soft delete, ga boleh pake query builder
+        // karena pake orm itu otomatis ngambil data yang column deleted_at nya null
+        $blog = Blog::query();
 
         if ($title) {
-            $query->where('title', 'like', '%'.$title.'%');
+            $blog->where('title', 'like', '%'.$title.'%');
 
             // jadi kalo ada seacrh maka akan di filter dulu, baru nanti dibawah kita
             // get lagi pake paginate
 
             // dan kalo ga ada search maka langsung aja get paginasi
         }
-        $blogs = $query->orderby('id', 'desc')->paginate(10);
+        $blogs = $blog->orderby('id', 'desc')->paginate(10);
+
+        // kalo mau nampilin juga yang udah kehapus pake soft delete
+        // $blogs = $query->withTrashed()->orderby('id', 'desc')->paginate(10);
+        // withTrashed() ini fungsinya untuk menampilkan data yang sudah dihapus secara soft delete.
 
         // ini kalo pake pagination
 
@@ -97,7 +104,8 @@ class BlogController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $blog = Blog::where('id', $id)->first();
+        // $blog = Blog::where('id', $id)->first();
+        $blog = Blog::find($id);
         if (! $blog) {
             // kalo ga ada datanya
             return redirect()->route('halaman-utama');
@@ -111,7 +119,7 @@ class BlogController extends Controller
 
     public function update(Request $request, $id)
     {
-        $blog = Blog::where('id', $id)->first();
+        $blog = Blog::find($id);
         if (! $blog) {
             // kalo ga ada datanya
             return redirect()->route('halaman-utama');
@@ -135,10 +143,18 @@ class BlogController extends Controller
             'description' => 'required',
         ]);
 
-        DB::table('blogs')->where('id', $id)->update([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+        // DB::table('blogs')->where('id', $id)->update([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        // ]);
+       
+        // $blog = Blog::where('id',$id);
+        // $blog->update($request->all());
+
+        // lebih baik gini aja, kalo kita hanya ingin update column yg ditentukan
+        Blog::where('id', $id)->update(
+    $request->only(['title', 'description'])
+);
 
         Session::flash('message', 'Blog has been updated!');
 
@@ -147,7 +163,7 @@ class BlogController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $blog = Blog::where('id', $id)->first();
+        $blog = Blog::find($id);
         if (! $blog) {
             // kalo ga ada datanya
             return redirect()->route('halaman-utama');
@@ -156,10 +172,29 @@ class BlogController extends Controller
             // abort(404);
         }
 
-        Blog::where('id', $id)->delete();
+        $blog->delete();
 
         Session::flash('message', 'Blog has been deleted!');
 
         return redirect()->route('halaman-utama');
+    }
+
+    public function trash(Request $request, $id)
+    {
+        $blog = Blog::withTrashed()->where('id', $id)->first();
+        // withTrashed() ini fungsinya untuk menampilkan data yang sudah dihapus secara soft delete.
+        if (! $blog) {
+            // kalo ga ada datanya
+            return redirect()->route('halaman-utama');
+
+            // atau bisa juga pake not fount
+            // abort(404);
+        }
+
+        // kalo mau nampilin data yang udah kehapus
+        // kita bisa pake withTrashed() di querynya
+        // $blog = Blog::withTrashed()->where('id', $id)->first();
+
+        return view('blog-detail', ['blog' => $blog]);
     }
 }

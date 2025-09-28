@@ -41,3 +41,7 @@ Route::patch("blog/{id}/update", [BlogController::class, 'update']);
 
 
 Route::get("blog/{id}/delete", [BlogController::class, 'delete']);
+
+
+// disini ktia pengen nampilin data yang udah kehapus
+Route::get("blog/{id}/trash", [BlogController::class, 'trash']);
