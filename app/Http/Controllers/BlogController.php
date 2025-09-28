@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -51,10 +52,21 @@ class BlogController extends Controller
             'title' => 'required|unique:blogs|max:255',
             'description' => 'required',
         ]);
-        DB::table('blogs')->insert([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+        // PENTINGGG
+        // kia bisa pake mass assignment kalo name di form sama dengan di database
+        // DB::table('blogs')->insert([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        // ]);
+
+        Blog::create($request->all());
+        // nah kalo yang sebelumnya itu harus pake fillable di model
+        // biar ga error mass assignment
+        // jadi di model Blog.php tambahin
+        // protected $fillable = ['title', 'description'];
+        // atau protected $guarded = []; // ini artinya semua field boleh diisi mass
+        // atau bisa juga
+        // Blog::create($request->only('title', 'description'));
 
         // biar muncul pesan sukses
         // Session flash adalah session sementara yang hanya berlaku untuk 1 request berikutnya saja.
@@ -69,7 +81,8 @@ class BlogController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $blog = DB::table('blogs')->where('id', $id)->first();
+        // $blog = DB::table('blogs')->where('id', $id)->first();
+        $blog = Blog::where('id', $id)->first();
 
         if (! $blog) {
             // kalo ga ada datanya
@@ -84,7 +97,7 @@ class BlogController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $blog = DB::table('blogs')->where('id', $id)->first();
+        $blog = Blog::where('id', $id)->first();
         if (! $blog) {
             // kalo ga ada datanya
             return redirect()->route('halaman-utama');
@@ -96,8 +109,9 @@ class BlogController extends Controller
         return view('blog-edit', ['blog' => $blog]);
     }
 
-    public function update(Request $request, $id){
-        $blog = DB::table('blogs')->where('id', $id)->first();
+    public function update(Request $request, $id)
+    {
+        $blog = Blog::where('id', $id)->first();
         if (! $blog) {
             // kalo ga ada datanya
             return redirect()->route('halaman-utama');
@@ -107,7 +121,17 @@ class BlogController extends Controller
         }
 
         $request->validate([
-            'title' => 'required|max:255|unique:blogs',
+
+            // jadi maksudnya ,title,'.$id
+            // adalah
+            // Di Laravel, ketika kita validasi dengan aturan unique, default-nya itu akan mengecek seluruh baris di tabel.
+            // Artinya: kalau kamu punya data lama, dan kamu update tanpa mengganti isinya, validasi akan gagal
+            // karena dianggap sudah ada.
+
+            // Makanya ditambahkan ,title,'.$id agar id yang sedang di-update tidak ikut dicek.
+
+
+            'title' => 'required|max:255|unique:blogs,title,'.$id,
             'description' => 'required',
         ]);
 
@@ -121,8 +145,9 @@ class BlogController extends Controller
         return redirect()->route('halaman-utama');
     }
 
-    public function delete(Request $request, $id){
-        $blog = DB::table('blogs')->where('id', $id)->first();
+    public function delete(Request $request, $id)
+    {
+        $blog = Blog::where('id', $id)->first();
         if (! $blog) {
             // kalo ga ada datanya
             return redirect()->route('halaman-utama');
@@ -131,7 +156,7 @@ class BlogController extends Controller
             // abort(404);
         }
 
-        DB::table('blogs')->where('id', $id)->delete();
+        Blog::where('id', $id)->delete();
 
         Session::flash('message', 'Blog has been deleted!');
 
