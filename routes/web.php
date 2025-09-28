@@ -27,3 +27,7 @@ Route::get(
 
 Route::get("blog/add", [BlogController::class, 'add']);
 Route::post("blog/create", [BlogController::class, 'create']);
+// ini akan masuk ke hal detail sesuai id
+// dan {id} ini otomatis akan menangkap parameter id dari url
+// lalu dikirim ke parameter di fungsi detail di BlogController
+Route::get("blog/{id}/detail", [BlogController::class, 'detail']);

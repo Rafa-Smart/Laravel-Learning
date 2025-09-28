@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class BlogController extends Controller
 {
@@ -46,16 +47,30 @@ class BlogController extends Controller
     public function create(Request $request)
     {
 
-        $validated = $request->validate([
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
+        $request->validate([
+            'title' => 'required|unique:blogs|max:255',
+            'description' => 'required',
         ]);
         DB::table('blogs')->insert([
             'title' => $request->title,
             'description' => $request->description,
         ]);
 
+        // biar muncul pesan sukses
+        // Session flash adalah session sementara yang hanya berlaku untuk 1 request berikutnya saja.
+        // Biasanya dipakai untuk menampilkan pesan sukses/error setelah redirect, misalnya:
+        Session::flash('message', 'New blog has been added!');
+
+        // redirect ke halaman utama
+
         return redirect()->route('halaman-utama');
         // return redirect('blog');
     }
+
+
+    public function detail(Request $request, $id){
+        $blog = DB::table("blogs")->where("id",$id)->first();
+        return view("blog-detail", ["blog"=>$blog]);
+    }
+
 }

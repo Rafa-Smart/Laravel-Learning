@@ -28,11 +28,13 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title">
+                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3">
+                            {{ old('description') }}
+                        </textarea>
                     </div>
                     <button type="submit" class="btn btn-success mb-3 form-control">Create</button>
                 </div>
