@@ -181,7 +181,7 @@ class BlogController extends Controller
 
     public function trash(Request $request, $id)
     {
-        $blog = Blog::withTrashed()->where('id', $id)->first();
+        $blog = Blog::withTrashed()->find($id);
         // withTrashed() ini fungsinya untuk menampilkan data yang sudah dihapus secara soft delete.
         if (! $blog) {
             // kalo ga ada datanya

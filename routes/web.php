@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -45,3 +46,10 @@ Route::get("blog/{id}/delete", [BlogController::class, 'delete']);
 
 // disini ktia pengen nampilin data yang udah kehapus
 Route::get("blog/{id}/trash", [BlogController::class, 'trash']);
+
+// users
+
+Route::get("/users", [UserController::class, 'index']);
+
+Route::get('users/add', [UserController::class, 'add']);
+Route::post('users/create', [UserController::class, 'create']);
