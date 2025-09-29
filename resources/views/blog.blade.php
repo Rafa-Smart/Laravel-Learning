@@ -14,8 +14,8 @@
     
     
     <div class="container">
+        @include('navbar')
         <div class="mt-5">
-            @include('navbar')
             <h1 class="text-center">Blogs List</h1>
 
             <div class="table-responsive mt-3">

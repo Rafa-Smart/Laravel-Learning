@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Add New Blog</title>
+    <title>Update user</title>
 </head>
 
 <body>
     <div class="container">
         <div class="mt-5">
-            <h1 class="text-center">Add New Blog Data</h1>
+            <h1 class="text-center">Update User Data</h1>
             @if ($errors->any())
                 <div class="alert alert-danger col-md-6">
                     <ul>
@@ -23,7 +23,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ url('blog/'.$blog->id.'/update') }}" class="form-group" method="post">
+            <form action="{{ url('users/'.$user->id.'/update') }}" class="form-group" method="post">
                 @csrf
 
                 {{-- karena di method di form itu ga ada patch
@@ -31,15 +31,19 @@
                 @method('PATCH')
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title"
-                            value="{{ $blog->title }}">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ $user->name }}">
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="3">
-                            {{ $blog->description }}
-                        </textarea>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email" name="email"
+                            value="{{ $user->email }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="password" name="password"
+                            value="{{ $user->password }}">
                     </div>
                     <button type="submit" class="btn btn-success mb-3 form-control">Update</button>
                 </div>

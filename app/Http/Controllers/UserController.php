@@ -38,4 +38,32 @@ class UserController extends Controller
         $user = User::find($id);
         return view('users.user-detail', ['user' => $user]);
     }
+
+    public function edit($id){
+        $user = User::find($id);
+        return view('users.user-edit', ['user' => $user]);
+    }
+
+    public function update($id, Request $request){
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,'.$id,
+            // unique:users,email,'.$id ini artinya email harus unik di tabel users
+            // kecuali untuk user dengan id yang sedang diupdate
+            'password' => 'nullable|min:8',
+            // nullable itu artinya boleh kosong
+            // jadi kalo ga diisi maka password ga akan diupdate
+        ]);
+
+        User::where('id',$id)->update($request->only(["name", 'email', 'password']));
+
+        Session::flash("message", "User data has been updated!");
+        return redirect('users');
+    }
+
+    public function delete($id){
+        User::where('id',$id)->delete();
+        Session::flash("message", "User data has been deleted!");
+        return redirect('users');
+    }
 }
