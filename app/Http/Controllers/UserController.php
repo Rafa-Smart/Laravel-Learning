@@ -29,6 +29,13 @@ class UserController extends Controller
 
         User::create($request->all());
         Session::flash("message", "New user has been added!");
-        return redirect('users.user');
+
+        // redirec tuh nama routingnya ya, bukan file
+        return redirect('users');
+    }
+
+    public function detail($id){
+        $user = User::find($id);
+        return view('users.user-detail', ['user' => $user]);
     }
 }

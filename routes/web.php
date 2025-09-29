@@ -53,3 +53,6 @@ Route::get("/users", [UserController::class, 'index']);
 
 Route::get('users/add', [UserController::class, 'add']);
 Route::post('users/create', [UserController::class, 'create']);
+Route::get('users/{id}/detail', [UserController::class, 'detail']);
+Route::get('users/{id}/edit', [UserController::class, 'edit']);
+Route::patch("users/{id}/update", [UserController::class, 'update']);

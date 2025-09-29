@@ -12,6 +12,7 @@
 
 
     <div class="container">
+        @include('navbar')
         <div class="mt-5">
             <h1 class="text-center">Users List</h1>
             <div class="table-responsive mt-3">
