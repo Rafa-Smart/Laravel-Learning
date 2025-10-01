@@ -12,7 +12,7 @@ class UserController extends Controller
         $nama = $request->input('nama');
         if($nama){
             $users = User::where('name', 'like', '%'.$nama.'%')->get();}
-        $users = User::orderBy('id','desc')->paginate(10);
+        $users = User::orderBy('id','desc')->paginate(4);
         return view('users.user', ["users" => $users]);
     }
 

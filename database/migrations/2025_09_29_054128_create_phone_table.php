@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('phone', function (Blueprint $table) {
             $table->id();
+            $table->string('phone_number')->unique();
+            $table->string('provider_name');
             $table->timestamps();
         });
     }

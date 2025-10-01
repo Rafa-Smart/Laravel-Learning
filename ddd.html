@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Online Sederhana</title>
+  <style>
+    /* Warna utama */
+    :root {
+      --bg-color: #faf8f1;       /* background */
+      --navbar-color: #faeab1;   /* navbar header */
+      --icon-color: #34656d;     /* icon */
+      --font-color: #334443;     /* font */
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--font-color);
+    }
+
+    /* Navbar */
+    nav {
+      background-color: var(--navbar-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    nav .menu {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav .menu a {
+      text-decoration: none;
+      color: var(--font-color);
+      font-weight: 500;
+    }
+
+    /* Icon */
+    .icon {
+      color: var(--icon-color);
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+
+    /* Beranda */
+    header {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    .produk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .produk {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .produk img {
+      max-width: 100%;
+      border-radius: 6px;
+    }
+
+    .produk h3 {
+      margin: 0.5rem 0;
+    }
+
+    .produk button {
+      background-color: var(--icon-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .produk button:hover {
+      opacity: 0.8;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--navbar-color);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">MyShop</div>
+    <div class="menu">
+      <a href="#">Beranda</a>
+      <a href="#">Produk</a>
+      <a href="#">Kontak</a>
+      <span class="icon">🛒</span>
+      <span class="icon">👤</span>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>Selamat Datang di Toko Online Sederhana</h1>
+    <p>Temukan produk terbaik dengan harga terjangkau</p>
+  </header>
+
+  <!-- Daftar Produk -->
+  <section class="produk-grid">
+    <div class="produk">
+      <img src="https://via.placeholder.com/200x150" alt="Produk 1">
+      <h3>Produk 1</h3>
+      <p>Rp 100.000</p>
+      <button>Beli</button>
+    </div>
+    <div class="produk">
+      <img src="https://via.placeholder.com/200x150" alt="Produk 2">
+      <h3>Produk 2</h3>
+      <p>Rp 150.000</p>
+      <button>Beli</button>
+    </div>
+    <div class="produk">
+      <img src="https://via.placeholder.com/200x150" alt="Produk 3">
+      <h3>Produk 3</h3>
+      <p>Rp 200.000</p>
+      <button>Beli</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 MyShop. All rights reserved.</p>
+  </footer>
+</body>
+</html>
